@@ -5,11 +5,11 @@ import MenuItem from "./MenuItem";
 function Menu() {
   const menu = useLoaderData();
   return (
-    <>
+    <div className="divide-y divide-stone-200 px-2 pt-0.5">
       {menu.map((pizza) => (
         <MenuItem key={pizza.id} pizza={pizza} />
       ))}
-    </>
+    </div>
   );
 }
 
@@ -19,7 +19,3 @@ export async function loader() {
 }
 
 export default Menu;
-
-// create a loader.
-// provide the loader.
-// provide the data into the page.
