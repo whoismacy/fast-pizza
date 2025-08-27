@@ -10,7 +10,6 @@ import CreateOrder, {
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
 
-// errors bubble up to the parent element
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
