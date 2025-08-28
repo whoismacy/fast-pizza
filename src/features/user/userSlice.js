@@ -27,7 +27,7 @@ const userSlice = createSlice({
     builder
       .addCase(
         fetchAddress.pending,
-        (state, action) => (state.status = "loading"),
+        (state, action) => void (state.status = "loading"),
       )
       .addCase(fetchAddress.fulfilled, (state, action) => {
         state.status = "idle";
@@ -36,7 +36,8 @@ const userSlice = createSlice({
       })
       .addCase(fetchAddress.rejected, (state, action) => {
         state.status = "error";
-        state.error = action.error.message;
+        state.error =
+          "An error occured while fetching your address, Please fill it manually.";
       }),
 });
 

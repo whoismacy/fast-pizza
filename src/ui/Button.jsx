@@ -20,14 +20,18 @@ export default function Button({
 
   if (path) {
     return (
-      <button className={styles[type]} onClick={() => navigate(path)}>
+      <button
+        className={styles[type]}
+        onClick={() => navigate(path)}
+        disabled={disabled}
+      >
         {children}
       </button>
     );
   }
   if (onClick) {
     return (
-      <button className={styles[type]} onClick={onClick}>
+      <button className={styles[type]} onClick={onClick} disabled={disabled}>
         {children}
       </button>
     );

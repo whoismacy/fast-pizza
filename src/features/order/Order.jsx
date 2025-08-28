@@ -1,5 +1,5 @@
 // Test ID: IIDSAT
-import { useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import {
   formatCurrency,
@@ -7,36 +7,24 @@ import {
   calcMinutesLeft,
 } from "../../utilities/helpers";
 import OrderItem from "./OrderItem";
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getCart } from "../cart/cartSlice";
 
 function Order() {
   const order = useLoaderData();
+  const cart = useSelector(getCart);
+  const fetcher = useFetcher();
   const { id, status, priority, priorityPrice, orderPrice, estimatedDelivery } =
     order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+
+  useEffect(
+    function () {
+      if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+    },
+    [fetcher],
+  );
 
   return (
     <div className="space-y-8 px-4 py-6">
@@ -67,7 +55,7 @@ function Order() {
       </div>
 
       <ul className="divide-y border-b border-t">
-        {fakeCart.map((item) => (
+        {cart.map((item) => (
           <OrderItem item={item} key={item.id} />
         ))}
       </ul>
